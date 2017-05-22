@@ -13,7 +13,15 @@
 
   :plugins [[lein-cljsbuild "1.1.4"
              :exclusions [org.clojure/clojure]]
-            [lein-figwheel "0.5.4-7"]]
+            [lein-figwheel "0.5.8"]]
+
+  :profiles
+  {:dev
+   {:source-paths ["dev"]
+    :dependencies [[figwheel-sidecar "0.5.8"]
+                   [com.cemerick/piggieback "0.2.1"]]}}
+
+  :repl-options  {:nrepl-middleware  [cemerick.piggieback/wrap-cljs-repl]}
 
   :clean-targets ^{:protect false} ["resources/public/js/out"
                                     "resources/public/js/flappy_bird_demo.js"
