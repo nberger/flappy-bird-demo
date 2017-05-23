@@ -23,7 +23,7 @@
 (def flappy-width 57)
 (def flappy-height 41)
 (def pillar-spacing 324)
-(def pillar-gap 158) ;; 158
+(def pillar-gap 50)
 (def pillar-width 86)
 
 (def starting-state { :timer-running false
@@ -95,7 +95,9 @@
 (defn sine-wave [st]
   (assoc st
     :flappy-y
-    (+ start-y (* 30 (.sin js/Math (/ (:time-delta st) 300))))))
+    (+ start-y
+       (* 80 (.sin js/Math (/ (:time-delta st)
+                              200))))))
 
 (defn update-flappy [{:keys [time-delta initial-vel flappy-y jump-count] :as st}]
   (if (pos? jump-count)
@@ -120,8 +122,8 @@
           :cur-time timestamp
           :time-delta (- timestamp (:flappy-start-time state)))
       update-flappy
-      update-pillars
-      collision?
+      #_update-pillars
+      #_collision?
       score))
 
 (defn jump [{:keys [cur-time jump-count] :as state}]
@@ -184,7 +186,7 @@
              [:h1.score score]
              (if-not timer-running
                [:a.start-button {:onClick #(start-game)}
-                (if (< 1 jump-count) "RESTART" "START")]
+                (if (< 1 jump-count) "RESTART" "ART")]
                [:span])
              [:div (map pillar pillar-list)]
              [:div.flappy {:style {:top (px flappy-y)}}]
