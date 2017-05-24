@@ -54,8 +54,17 @@
        (> (+ gap-top pillar-gap)
           (+ flappy-y flappy-height))))
 
+(def bottom-collision-limit
+  (- bottom-y flappy-height))
+
 (defn bottom-collision? [{:keys [flappy-y]}]
-  (>= flappy-y (- bottom-y flappy-height)))
+  (>= flappy-y bottom-collision-limit))
+
+(comment
+  (bottom-collision? {:flappy-y (- bottom-collision-limit 1)})
+  (bottom-collision? {:flappy-y bottom-collision-limit})
+  (bottom-collision? {:flappy-y (+ bottom-collision-limit 20)})
+  )
 
 (defn collision? [{:keys [pillar-list] :as st}]
   (if (some #(or (and (in-pillar? %)
@@ -116,6 +125,11 @@
           :flappy-start-time cur-time
           :initial-vel jump-vel)))
 
+(comment
+  (jump {:cur-time 1000
+         :jump-count 3})
+  )
+
 ;; derivatives
 
 (defn border [{:keys [cur-time] :as state}]
@@ -138,6 +152,10 @@
       pillar-offsets))
 
 (defn px [n] (str n "px"))
+
+(comment
+  (px 20)
+  )
 
 (defn pillar [{:keys [cur-x pos-x upper-height lower-height]}]
   [:div.pillars
