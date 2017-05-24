@@ -18,8 +18,8 @@
           :cur-time timestamp
           :time-delta (- timestamp (:flappy-start-time state)))
       views/update-flappy
-      views/update-pillars
-      views/collision?
+      #_views/update-pillars
+      #_views/collision?
       views/score))
 
 (defn time-loop [time]

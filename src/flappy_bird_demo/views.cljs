@@ -109,16 +109,6 @@
                  4)]
   (assoc st :score (if (neg? score) 0 score))))
 
-(defn time-update [timestamp state]
-  (-> state
-      (assoc
-          :cur-time timestamp
-          :time-delta (- timestamp (:flappy-start-time state)))
-      update-flappy
-      #_update-pillars
-      #_collision?
-      score))
-
 (defn jump [{:keys [cur-time jump-count] :as state}]
   (-> state
       (assoc
