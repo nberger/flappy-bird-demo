@@ -145,3 +145,13 @@
                                        :height upper-height}}]
    [:div.pillar.pillar-lower {:style {:left (px cur-x)
                                        :height lower-height}}]])
+
+(defn time-update [timestamp state]
+  (-> state
+      (assoc
+          :cur-time timestamp
+          :time-delta (- timestamp (:flappy-start-time state)))
+      update-flappy
+      update-pillars
+      #_collision?
+      score))

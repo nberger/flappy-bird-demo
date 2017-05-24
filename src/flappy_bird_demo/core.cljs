@@ -12,18 +12,8 @@
 
 (defonce flap-state (atom views/starting-state))
 
-(defn time-update [timestamp state]
-  (-> state
-      (assoc
-          :cur-time timestamp
-          :time-delta (- timestamp (:flappy-start-time state)))
-      views/update-flappy
-      #_views/update-pillars
-      #_views/collision?
-      views/score))
-
 (defn time-loop [time]
-  (let [new-state (swap! flap-state (partial time-update time))]
+  (let [new-state (swap! flap-state (partial views/time-update time))]
     (when (:timer-running new-state)
       (go
        (<! (timeout 30))
