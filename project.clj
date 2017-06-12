@@ -4,7 +4,7 @@
   :url "http://rigsomelight.com/2014/05/01/interactive-programming-flappy-bird-clojurescript.html"
 
   :dependencies [[org.clojure/clojure "1.8.0"]
-                 [org.clojure/clojurescript "1.9.293"]
+                 [org.clojure/clojurescript "1.9.562"]
                  [org.clojure/core.async "0.2.395"]
                  [cljsjs/react-dom-server "15.3.1-0"]  ;; for sablono
                  [cljsjs/react-dom "15.3.1-0"] ;; for sablono
