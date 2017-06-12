@@ -9,7 +9,7 @@
                  [cljsjs/react-dom-server "15.3.1-0"]  ;; for sablono
                  [cljsjs/react-dom "15.3.1-0"] ;; for sablono
                  [cljsjs/react "15.3.1-0"] ;; for sablono
-                 [sablono "0.7.5"]]
+                 [reagent "0.6.2"]]
 
   :plugins [[lein-cljsbuild "1.1.4"
              :exclusions [org.clojure/clojure]]

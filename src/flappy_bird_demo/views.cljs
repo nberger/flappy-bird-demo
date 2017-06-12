@@ -1,8 +1,7 @@
 (ns flappy-bird-demo.views
   (:require
    [cljsjs.react]
-   [cljsjs.react.dom]
-   [sablono.core :as sab :include-macros true]))
+   [cljsjs.react.dom]))
 
 (defn floor [x] (.floor js/Math x))
 
