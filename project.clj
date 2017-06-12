@@ -32,7 +32,7 @@
   :cljsbuild {
     :builds [{:id "flappy-bird-demo"
               :source-paths ["src"]
-              :figwheel true
+              :figwheel {:on-jsload "flappy-bird-demo.core/init"}
               :compiler {
                          :main flappy-bird-demo.core
                          :asset-path "js/out"

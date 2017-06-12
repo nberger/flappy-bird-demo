@@ -41,11 +41,11 @@
    [:div.flappy {:style {:top (views/px flappy-y)}}]
    [:div.scrolling-border {:style { :background-position-x (views/px border-pos)}}]])
 
-(let [node (.getElementById js/document "board-area")]
-  (defn renderer [full-state]
-    (reagent/render-component (main-template full-state) node)))
+(defn renderer [node full-state]
+  (reagent/render-component (main-template full-state) node))
 
-(add-watch flap-state :renderer (fn [_ _ _ n]
-                                  (renderer (views/world n))))
-
-(reset! flap-state @flap-state)
+(defn init []
+  (let [node (.getElementById js/document "board-area")]
+    (add-watch flap-state :renderer (fn [_ _ _ n]
+                                      (renderer node (views/world n))))
+    (reset! flap-state @flap-state)))
