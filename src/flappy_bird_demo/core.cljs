@@ -3,49 +3,59 @@
    [cljsjs.react]
    [cljsjs.react.dom]
    [reagent.core :as reagent]
+   [re-frisk.core :refer [enable-re-frisk!]]
+   [re-frame.registrar :as registrar]
+   [re-frame.core :refer [dispatch subscribe dispatch-sync]]
    [cljs.core.async :refer [<! chan sliding-buffer put! close! timeout]]
+   [flappy-bird-demo.handlers :as handlers]
+   [flappy-bird-demo.subs :as subs]
    [flappy-bird-demo.views :as views])
   (:require-macros
    [cljs.core.async.macros :refer [go-loop go]]))
 
 (enable-console-print!)
 
-(defonce flap-state (atom views/starting-state))
+(defn main-template []
+  (let [pillar-list @(subscribe [:pillar-list])
+        {:keys [score cur-time jump-count
+                timer-running border-pos
+                flappy-y]} @(subscribe [:db])]
+    [:div.board {:on-mouse-down (fn [e]
+                                  (dispatch [:jump])
+                                  (.preventDefault e))}
+     [:h1.score score]
+     (if-not timer-running
+       [:a.start-button {:on-click #(dispatch [:start-game])}
+        (if (< 1 jump-count) "RESTART" "START")]
+       [:span])
+     [:div
+      (for [p pillar-list]
+        ^{:key (:cur-x p)}
+        [views/pillar p])]
+     [:div.flappy {:style {:top (views/px flappy-y)}}]
+     [:div.scrolling-border {:style {:background-position-x (views/px border-pos)}}]]))
 
-(defn time-loop [time]
-  (let [new-state (swap! flap-state (partial views/time-update time))]
-    (when (:timer-running new-state)
-      (go
-       (<! (timeout 30))
-       (.requestAnimationFrame js/window time-loop)))))
+(defonce tick-interval
+  (atom nil))
 
-(defn start-game []
-  (.requestAnimationFrame
-   js/window
-   (fn [time]
-     (reset! flap-state (views/reset-state @flap-state time))
-     (time-loop time))))
+(defn start-ticking! []
+  (when-not @tick-interval
+    (reset! tick-interval (js/setInterval #(dispatch [:tick]) 30))))
 
-(defn main-template [{:keys [score cur-time jump-count
-                             timer-running border-pos
-                             flappy-y pillar-list]}]
-  [:div.board { :onMouseDown (fn [e]
-                               (swap! flap-state views/jump)
-                               (.preventDefault e))}
-   [:h1.score score]
-   (if-not timer-running
-     [:a.start-button {:onClick #(start-game)}
-      (if (< 1 jump-count) "RESTART" "START")]
-     [:span])
-   [:div (map views/pillar pillar-list)]
-   [:div.flappy {:style {:top (views/px flappy-y)}}]
-   [:div.scrolling-border {:style { :background-position-x (views/px border-pos)}}]])
-
-(defn renderer [node full-state]
-  (reagent/render-component (main-template full-state) node))
+(defn stop-ticking! []
+  (when @tick-interval
+    (js/clearInterval @tick-interval)
+    (reset! tick-interval nil)))
 
 (defn init []
   (let [node (.getElementById js/document "board-area")]
-    (add-watch flap-state :renderer (fn [_ _ _ n]
-                                      (renderer node (views/world n))))
-    (reset! flap-state @flap-state)))
+    (stop-ticking!)
+    (registrar/clear-handlers :event)
+    (registrar/clear-handlers :sub)
+
+    (enable-re-frisk!)
+    (handlers/register-handlers!)
+    (subs/register-subs!)
+    (dispatch-sync [:initialize-db])
+    (reagent/render-component [main-template] node)
+    (start-ticking!)))

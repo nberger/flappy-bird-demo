@@ -11,7 +11,8 @@
                  [cljsjs/react "15.3.1-0"] ;; for sablono
                  [binaryage/devtools "0.9.4"]
                  [reagent "0.6.2"]
-                 [re-frame "0.8.0"]]
+                 [re-frame "0.8.0"]
+                 [re-frisk "0.4.5"]]
 
   :plugins [[lein-cljsbuild "1.1.4"
              :exclusions [org.clojure/clojure]]
@@ -41,6 +42,7 @@
                          :preloads [devtools.preload]
                          :output-to "resources/public/js/flappy_bird_demo.js"
                          :output-dir "resources/public/js/out"
+                         :source-map true
                          :source-map-timestamp true}}]}
 
   :figwheel { :css-dirs ["resources/public/css"]
