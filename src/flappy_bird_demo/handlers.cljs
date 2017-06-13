@@ -158,6 +158,13 @@
     :tick
     [check-spec-interceptor] ;; skip debug interceptor, too noisy
     (fn [db]
-      (if (:timer-running db)
+      (if (and (:timer-running db)
+               (not (:paused db)))
         (time-update (get-current-timestamp) db)
-        db))))
+        db)))
+
+  (reg-event-db
+    :toggle-pause
+    flappy-interceptors
+    (fn [db]
+      (update db :paused (fnil not false)))))

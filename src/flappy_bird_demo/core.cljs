@@ -47,6 +47,9 @@
     (js/clearInterval @tick-interval)
     (reset! tick-interval nil)))
 
+(defn handle-key-down [e]
+  (dispatch [:toggle-pause]))
+
 (defn init []
   (let [node (.getElementById js/document "board-area")]
     (stop-ticking!)
@@ -56,6 +59,10 @@
     (enable-re-frisk!)
     (handlers/register-handlers!)
     (subs/register-subs!)
+
+    (when (empty? @(subscribe [:db]))
+      (let [body (.-body js/document)]
+        (.addEventListener body "keydown" #(handle-key-down %))))
     (dispatch-sync [:initialize-db])
     (reagent/render-component [main-template] node)
     (start-ticking!)))
