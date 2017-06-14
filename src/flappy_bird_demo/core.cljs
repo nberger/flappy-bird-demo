@@ -1,7 +1,5 @@
 (ns flappy-bird-demo.core
   (:require
-   [cljsjs.react]
-   [cljsjs.react.dom]
    [reagent.core :as reagent]
    [re-frisk.core :refer [enable-re-frisk!]]
    [re-frame.registrar :as registrar]
@@ -9,9 +7,7 @@
    [cljs.core.async :refer [<! chan sliding-buffer put! close! timeout]]
    [flappy-bird-demo.handlers :as handlers]
    [flappy-bird-demo.subs :as subs]
-   [flappy-bird-demo.views :as views])
-  (:require-macros
-   [cljs.core.async.macros :refer [go-loop go]]))
+   [flappy-bird-demo.views :as views]))
 
 (enable-console-print!)
 

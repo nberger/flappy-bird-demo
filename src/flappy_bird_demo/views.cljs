@@ -1,9 +1,8 @@
 (ns flappy-bird-demo.views
   (:require
-   [cljsjs.react]
-   [cljsjs.react.dom]))
+    [re-frame.core :refer [subscribe dispatch]]))
 
-(defn jump [{:keys [cur-time jump-count] :as state}]
+#_(defn jump [{:keys [cur-time jump-count] :as state}]
   (-> state
       (assoc
           :jump-count (inc jump-count)
@@ -44,6 +43,6 @@
      [:div
       (for [p pillar-list]
         ^{:key (:cur-x p)}
-        [views/pillar p])]
-     [:div.flappy {:style {:top (views/px flappy-y)}}]
-     [:div.scrolling-border {:style {:background-position-x (views/px border-pos)}}]]))
+        [pillar p])]
+     [:div.flappy {:style {:top (px flappy-y)}}]
+     [:div.scrolling-border {:style {:background-position-x (px border-pos)}}]]))
