@@ -155,6 +155,15 @@
               :timer-running true)))))
 
   (reg-event-db
+    :jump
+    flappy-interceptors
+    (fn [db]
+      (-> db
+          (update :jump-count inc)
+          (assoc :flappy-start-time (get-in db [:cur-time])
+                 :initial-vel (get-in db [:options :jump-vel])))))
+
+  (reg-event-db
     :tick
     [check-spec-interceptor] ;; skip debug interceptor, too noisy
     (fn [db]
