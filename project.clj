@@ -11,6 +11,7 @@
                  [cljsjs/react "15.3.1-0"] ;; for sablono
                  [binaryage/devtools "0.9.4"]
                  [reagent "0.6.2"]
+                 [cljsjs/rc-slider "4.0.1-0"]
                  [devcards "0.2.1"]
                  [re-frame "0.8.0"]
                  [re-frisk "0.4.5"]]
