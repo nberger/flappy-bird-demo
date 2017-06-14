@@ -140,7 +140,7 @@
     (fn [db]
       (if (empty? db)
         flappy.db/default-db
-        db)))
+        (assoc db :options (:options flappy.db/default-db)))))
 
   (reg-event-db
     :start-game
