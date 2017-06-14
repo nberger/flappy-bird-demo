@@ -90,7 +90,7 @@
         new-y   (- flappy-y cur-vel)
         bottom-limit (- bottom-y flappy-height)]
     (if (> new-y bottom-limit)
-      (- bottom-y flappy-height)
+      bottom-limit
       new-y)))
 
 (defn update-flappy [{:keys [jump-count] :as db}]
