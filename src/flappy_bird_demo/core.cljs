@@ -33,9 +33,10 @@
     (registrar/clear-handlers :event)
     (registrar/clear-handlers :sub)
 
-    (enable-re-frisk!)
     (handlers/register-handlers!)
     (subs/register-subs!)
+
+    (enable-re-frisk! {:kind->id->handler? true})
 
     (when (empty? @(subscribe [:db]))
       (let [body (.-body js/document)]
