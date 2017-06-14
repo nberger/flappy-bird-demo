@@ -37,11 +37,11 @@
   :cljsbuild {
     :builds [{:id "flappy-bird-demo"
               :source-paths ["src"]
-              :figwheel {:devcards true
-                         :on-jsload "flappy-bird-demo.core/init"}
+              :figwheel {:on-jsload "flappy-bird-demo.core/init"}
               :compiler {:main flappy-bird-demo.core
                          :asset-path "js/out"
                          :preloads [devtools.preload]
+                         :devcards true
                          :output-to "resources/public/js/flappy_bird_demo.js"
                          :output-dir "resources/public/js/out"
                          :source-map true

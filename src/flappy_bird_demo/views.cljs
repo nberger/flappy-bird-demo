@@ -4,7 +4,7 @@
 
 (defn px [n] (str n "px"))
 
-(defn pillar [{:keys [cur-x pos-x upper-height lower-height]}]
+(defn pillar [{:keys [cur-x upper-height lower-height]}]
   [:div.pillars
    [:div.pillar.pillar-upper {:style {:left (px cur-x)
                                        :height upper-height}}]
