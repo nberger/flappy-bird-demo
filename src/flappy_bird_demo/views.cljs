@@ -27,3 +27,23 @@
                                        :height upper-height}}]
    [:div.pillar.pillar-lower {:style {:left (px cur-x)
                                        :height lower-height}}]])
+
+(defn main []
+  (let [pillar-list @(subscribe [:pillar-list])
+        {:keys [score cur-time jump-count
+                timer-running border-pos
+                flappy-y]} @(subscribe [:db])]
+    [:div.board {:on-mouse-down (fn [e]
+                                  (dispatch [:jump])
+                                  (.preventDefault e))}
+     [:h1.score score]
+     (if-not timer-running
+       [:a.start-button {:on-click #(dispatch [:start-game])}
+        (if (< 1 jump-count) "RESTART" "START")]
+       [:span])
+     [:div
+      (for [p pillar-list]
+        ^{:key (:cur-x p)}
+        [views/pillar p])]
+     [:div.flappy {:style {:top (views/px flappy-y)}}]
+     [:div.scrolling-border {:style {:background-position-x (views/px border-pos)}}]]))
