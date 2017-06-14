@@ -56,8 +56,9 @@
     (assoc db :timer-running false)
     db))
 
-(defn new-pillar [{:keys [pillar-gap bottom-y]} cur-time pos-x]
-  {:start-time cur-time
+(defn new-pillar [{:keys [pillar-gap bottom-y]} cur-time pos-x k]
+  {:key k
+   :start-time cur-time
    :pos-x      pos-x
    :cur-x      pos-x
    :gap-top    (+ 60 (rand-int (- bottom-y 120 pillar-gap)))})
@@ -70,11 +71,10 @@
                           (filter #(> (:cur-x %) (- pillar-width)) pillars-with-pos))
         new-pillars (if (< (count pillars-in-world) 3)
                       (conj pillars-in-world
-                            (new-pillar
-                              options
-                              cur-time
-                              (+ pillar-spacing
-                                 (:cur-x (last pillars-in-world)))))
+                            (new-pillar options cur-time
+                                        (+ pillar-spacing
+                                           (:cur-x (last pillars-in-world)))
+                                        (->> pillar-list (map :key) (reduce max) inc)))
                       pillars-in-world)]
     (assoc db :pillar-list new-pillars)))
 

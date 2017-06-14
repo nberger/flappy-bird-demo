@@ -26,7 +26,7 @@
        [:span])
      [:div
       (for [p pillar-list]
-        ^{:key (:cur-x p)}
+        ^{:key (:key p)}
         [pillar p])]
      [:div.flappy {:style {:top (px flappy-y)}}]
      [:div.scrolling-border {:style {:background-position-x (px border-pos)}}]]))

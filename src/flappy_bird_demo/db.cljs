@@ -76,7 +76,8 @@
    :flappy-start-time 0
    :flappy-y start-y
    :pillar-list
-   [{:start-time 0
+   [{:key 0
+     :start-time 0
      :pos-x 900
      :cur-x 900
      :gap-top 200}]})
