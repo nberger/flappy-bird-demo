@@ -1,6 +1,8 @@
 (ns flappy-bird-demo.subs
   (:require [re-frame.core :refer [reg-sub subscribe]]))
 
+(defn floor [x] (.floor js/Math x))
+
 (defn register-subs! []
 
   (reg-sub
@@ -32,6 +34,13 @@
     :flappy-y
     (fn [db _]
       (:flappy-y db)))
+
+  (reg-sub
+    :flappy-angle
+    (fn [db]
+      (let [{:keys [time-delta]
+             {:keys [gravity initial-vel]} :options} db]
+        (floor ( * -1 (- initial-vel (* time-delta gravity)))))))
 
   (reg-sub
     :jump-count

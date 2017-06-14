@@ -28,9 +28,16 @@
       [:button.start-button {:on-click #(dispatch [:toggle-pause])}
        "PAUSED"])))
 
-(defn flappy []
-  (let [flappy-y @(subscribe [:flappy-y])]
-    [:div.flappy {:style {:top (px flappy-y)}}]))
+(defn flappy-pure [y angle]
+  (let [angle (min 75 (max -75 angle))]
+    [:div.flappy {:style {:top (px y)
+                          :transform (str "rotate(" angle "deg)")}}]))
+
+(defn flappy
+  []
+  (let [y @(subscribe [:flappy-y])
+        angle @(subscribe [:flappy-angle])]
+    [flappy-pure y angle]))
 
 (defn main []
   (let [pillar-list @(subscribe [:pillar-list])

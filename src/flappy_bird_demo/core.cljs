@@ -5,6 +5,7 @@
    [re-frame.registrar :as registrar]
    [re-frame.core :refer [dispatch subscribe dispatch-sync]]
    [cljs.core.async :refer [<! chan sliding-buffer put! close! timeout]]
+   [flappy-bird-demo.devcards]
    [flappy-bird-demo.handlers :as handlers]
    [flappy-bird-demo.subs :as subs]
    [flappy-bird-demo.views :as views]))

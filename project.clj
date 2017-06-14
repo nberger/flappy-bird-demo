@@ -11,6 +11,7 @@
                  [cljsjs/react "15.3.1-0"] ;; for sablono
                  [binaryage/devtools "0.9.4"]
                  [reagent "0.6.2"]
+                 [devcards "0.2.1"]
                  [re-frame "0.8.0"]
                  [re-frisk "0.4.5"]]
 
@@ -35,9 +36,9 @@
   :cljsbuild {
     :builds [{:id "flappy-bird-demo"
               :source-paths ["src"]
-              :figwheel {:on-jsload "flappy-bird-demo.core/init"}
-              :compiler {
-                         :main flappy-bird-demo.core
+              :figwheel {:devcards true
+                         :on-jsload "flappy-bird-demo.core/init"}
+              :compiler {:main flappy-bird-demo.core
                          :asset-path "js/out"
                          :preloads [devtools.preload]
                          :output-to "resources/public/js/flappy_bird_demo.js"
