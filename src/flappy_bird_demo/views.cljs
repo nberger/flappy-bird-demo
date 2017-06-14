@@ -15,15 +15,19 @@
   (let [pillar-list @(subscribe [:pillar-list])
         {:keys [score cur-time jump-count
                 timer-running border-pos
-                flappy-y]} @(subscribe [:db])]
+                flappy-y paused]} @(subscribe [:db])]
     [:div.board {:on-mouse-down (fn [e]
                                   (dispatch [:jump])
                                   (.preventDefault e))}
      [:h1.score score]
-     (if-not timer-running
-       [:a.start-button {:on-click #(dispatch [:start-game])}
+     (cond
+       (not timer-running)
+       [:button.start-button {:on-click #(dispatch [:start-game])}
         (if (< 1 jump-count) "RESTART" "START")]
-       [:span])
+
+       paused
+       [:button.start-button {:on-click #(dispatch [:toggle-pause])}
+        "PAUSED"])
      [:div
       (for [p pillar-list]
         ^{:key (:key p)}
