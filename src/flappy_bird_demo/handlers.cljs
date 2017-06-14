@@ -175,4 +175,11 @@
     :toggle-pause
     flappy-interceptors
     (fn [db]
-      (update db :paused (fnil not false)))))
+      (let [paused-delta (- (get-current-timestamp) (:cur-time db))]
+        (-> db
+            (update :paused (fnil not false))
+            ;; make as if time didn't pass by
+            (update :flappy-start-time + paused-delta)
+            (update :pillar-list (fn [ps]
+                                   (map #(update % :start-time + paused-delta) ps)))
+            (assoc :cur-time (get-current-timestamp)))))))
