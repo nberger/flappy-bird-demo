@@ -1,8 +1,9 @@
 (ns flappy-bird-demo.devcards
   (:require-macros
-    [devcards.core :refer [defcard defcard-rg]])
+    [devcards.core :refer [defcard defcard-rg deftest]])
   (:require
     [devcards.core :as devcards]
+    [cljs.test :refer [testing is]]
     [reagent.core :as reagent]
     [cljsjs.rc-slider]
     [flappy-bird-demo.views :as views]))
@@ -53,6 +54,31 @@
   {:y 0
    :angle -120}
   {:inspect-data true})
+
+(deftest smooth-angle-test
+  (testing "angle keeps at 0 until it gets to 30 or -30"
+    (is (= 30
+           (views/smooth-angle 30)))
+    (is (= -30
+           (views/smooth-angle -30)))
+    (is (= 0
+           (views/smooth-angle 0)
+           (views/smooth-angle 10)
+           (views/smooth-angle 18)
+           (views/smooth-angle 29)
+           (views/smooth-angle -15)
+           (views/smooth-angle -29))))
+
+  (testing "angle doesn't go higher than 75 degrees"
+    (is (= 75
+           (views/smooth-angle 75)
+           (views/smooth-angle 90)
+           (views/smooth-angle 182))))
+  (testing "angle doesn't go lower than -75 degrees"
+    (is (= -75
+           (views/smooth-angle -75)
+           (views/smooth-angle -90)
+           (views/smooth-angle -182)))))
 
 (defn start-devcards []
   (devcards/start-devcard-ui!))

@@ -38,9 +38,9 @@
   (reg-sub
     :flappy-angle
     (fn [db]
-      (let [{:keys [time-delta]
-             {:keys [gravity initial-vel]} :options} db]
-        (floor ( * -1 (- initial-vel (* time-delta gravity)))))))
+      (let [{:keys [time-delta initial-vel]
+             {:keys [gravity]} :options} db]
+        (floor ( * -3 (- initial-vel (* time-delta gravity)))))))
 
   (reg-sub
     :jump-count

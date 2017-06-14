@@ -28,10 +28,12 @@
       [:button.start-button {:on-click #(dispatch [:toggle-pause])}
        "PAUSED"])))
 
+(defn smooth-angle [angle]
+  angle)
+
 (defn flappy-pure [y angle]
-  (let [angle (min 75 (max -75 angle))]
-    [:div.flappy {:style {:top (px y)
-                          :transform (str "rotate(" angle "deg)")}}]))
+  [:div.flappy {:style {:top (px y)
+                        :transform (str "rotate(" (smooth-angle angle) "deg)")}}])
 
 (defn flappy
   []
