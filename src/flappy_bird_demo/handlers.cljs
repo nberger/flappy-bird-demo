@@ -126,11 +126,10 @@
              :time-delta (- timestamp (:flappy-start-time db)))
       update-flappy
       update-pillars
-      stop-on-collision  
+      stop-on-collision
       update-score
       update-border
-      update-pillar-offsets
-      ))
+      update-pillar-offsets))
 
 (defn register-handlers! []
 
