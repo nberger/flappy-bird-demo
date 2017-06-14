@@ -25,7 +25,9 @@
     (reset! tick-interval nil)))
 
 (defn handle-key-down [e]
-  (dispatch [:toggle-pause]))
+  (cond
+    (= "p" (.-key e))
+    (dispatch [:toggle-pause])))
 
 (defn init []
   (let [node (.getElementById js/document "board-area")]
