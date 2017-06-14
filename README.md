@@ -6,6 +6,12 @@ Watch the 6 minute [video](https://www.youtube.com/watch?v=KZjFVdU8VLI)
 
 Checkout the documentation on [lein-figwheel](https://github.com/bhauman/lein-figwheel) to go further!
 
+**Run**: `lein figwheel`
+
+**Open**: http://localhost:3449
+
+**Open devcards**: http://localhost:3449/devcards.html
+
 ## License
 
 Copyright © 2014 Bruce Hauman
