@@ -6,7 +6,7 @@ Watch the 6 minute [video](https://www.youtube.com/watch?v=KZjFVdU8VLI)
 
 Checkout the documentation on [lein-figwheel](https://github.com/bhauman/lein-figwheel) to go further!
 
-**Run**: `lein figwheel`
+**Run**: `lein figwheel` (make it sure to [install lein first](https://leiningen.org/#install))
 
 **Open**: http://localhost:3449
 
